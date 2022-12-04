@@ -1,0 +1,81 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+
+        // max number of numbers
+        const int ind = 20;
+        // initializing the array
+        int arr[ind + 1] = { 0 };
+        // i is used to highlight the prime numbers
+        int i = 2;
+        // j is used to strike through the numbers that are not prime
+        int j = 0;
+        // counter for the prime numbers
+        int t = 0;
+        int result = 1;
+        int primeNumbersCounter = 0;
+        for (int i = 2; i < ind; i++) {
+            if (arr[i] == 0) {
+                arr[i] = i; // highlighted prime number
+                j = i * i;
+                primeNumbersCounter++;
+                while (j < ind) {
+                    if (arr[j] == 0) {
+                        arr[j] = 1; // striked through number
+                    }
+                    j += i;
+                }
+            }
+        }
+        // The number which is going to be decomposed
+        int n;
+        if( n < 2 || n > 2000){
+            cout << "Invalid input data!" << endl;
+        }
+        cout << "Please enter n: ";
+        cin >> n;
+        // array for the prime divisors
+        int arr_p[ind] = { 0 };
+        // array for the greatest degree of each divisor
+        int arr_s[ind] = { 0 };
+        int cnt_pow = 0, tmp = n;
+        for (int i = 2; i < ind; i++) {
+            cnt_pow = 0;
+            if (arr[i] != 1) {
+                if (n % arr[i] == 0) {
+                    arr_p[i] = i;
+                    while (tmp % i == 0) {
+                        cnt_pow++;
+                        tmp /= i;
+                    }
+                    arr_s[i] = cnt_pow;
+                }
+            }
+        }
+        int primeCnt = 0;
+        for (int i = 0; i < ind; i++) {
+            if (arr_p[i] != 0) {
+                primeCnt++;
+            }
+        }
+        j = 0;
+        cout << "Canonical decomposition of " << n << " = ";
+        for (int i = 0; i < ind; i++) {
+            if (arr_p[i] != 0) {
+                cout << arr_p[i] << "^" << arr_s[i];
+                 t = (arr_s[i] + 1);
+                 result = result *t;
+                if (j++ < primeCnt - 1) {
+                    cout << "*";
+                }
+
+            }
+        }
+        cout << endl;
+        cout << "The number of divisors of the " << n << " is "<< result << endl;
+
+    return 0;
+}
