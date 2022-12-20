@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int encode(char* orig, char* coded, int n) {
+	char* ptr = orig;
+	unsigned i = 0;
+	while (*ptr != '\0') {
+		if ((*ptr >= 'A' && *ptr <= 'Z') || (*ptr >= 'a' && *ptr <= 'z')) {
+			if ((*ptr >= 'A' && *ptr <= 'Z' - n) || (*ptr >= 'a' && *ptr <= 'z' - n)) {
+				coded[i++] = *ptr + n;
+			}
+			else {
+                if(n == 0)
+                coded[i++] = *ptr;
+                else
+				coded[i++] = *ptr - (26 - n);
+			}
+		}
+		else {
+			coded[i++] = *ptr;
+		}
+		ptr++;
+	}
+	coded[i] = '\0';
+	return 0;
+}
+int main()
+{
+    char txt[1000];
+    cin.getline(txt, 999);
+    int n;
+    cin >> n;
+    if (n > 25 || n < 0){
+        cout << "Invalid input data!" << endl;
+    }
+    else{
+
+    char* encodedTxt = new char[strlen(txt) + 1];
+    encode(txt, encodedTxt,n);
+    cout << encodedTxt << endl;
+
+        if (encodedTxt != nullptr) {
+			delete[] encodedTxt;
+			encodedTxt = nullptr;
+		}
+    }
+    return 0;
+}
