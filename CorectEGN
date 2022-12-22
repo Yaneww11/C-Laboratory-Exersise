@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int checkEGN(char* egn_numbers){
+    int sum = 0;
+    int result = 0;
+    for (int i = 0; i < 10; i++) {
+		}
+		sum = (2*egn_numbers[0] + 4*egn_numbers[1] + 8*egn_numbers[2] + 5*egn_numbers[3] + 10*egn_numbers[4] +
+		9*egn_numbers[5] +7*egn_numbers[6] + 3*egn_numbers[7] + 6*egn_numbers[8]) % 11;
+		if(egn_numbers[9] == 0)
+            egn_numbers[9] = 10;
+
+		cout << "\nThe sum is: " << sum << endl;
+		if(egn_numbers[9] == sum){
+            result =1;
+		}
+           return result;
+}
+
+int main()
+{
+		char egn[10], * egn_ptr;
+		int* egn_numbers = new int[10];
+		cout << "Please enter an EGN: ";
+		cin >> egn;
+
+		egn_ptr = egn;
+		int i = 0;
+		while (*egn_ptr != '\0') {
+			egn_numbers[i++] = (int)(*egn_ptr) - 48;
+			egn_ptr++;
+		}
+		int sum = 0;
+		for (int i = 0; i < 10; i++) {
+		}
+		sum = (2*egn_numbers[0] + 4*egn_numbers[1] + 8*egn_numbers[2] + 5*egn_numbers[3] + 10*egn_numbers[4] +
+		9*egn_numbers[5] +7*egn_numbers[6] + 3*egn_numbers[7] + 6*egn_numbers[8]) % 11;
+		if(egn_numbers[9] == 0)
+            egn_numbers[9] = 10;
+            cout << egn_numbers[0] << endl;
+        cout << egn_numbers[9] << endl;
+
+
+		cout << "\nThe sum is: " << sum << endl;
+		if(egn_numbers[9] == sum){
+            cout << 1 << endl;
+		}
+		else
+             cout << 0 << endl;
+    return 0;
+}
+/////////
+#include <iostream>
+#include <cstring>
+using namespace std;
+bool checkEGN(char* egn_numbers){
+    bool corect = false;
+    int sum = 0;
+		sum = (2*egn_numbers[0] + 4*egn_numbers[1] + 8*egn_numbers[2] + 5*egn_numbers[3] + 10*egn_numbers[4] +
+		9*egn_numbers[5] +7*egn_numbers[6] + 3*egn_numbers[7] + 6*egn_numbers[8]) % 11;
+		if(egn_numbers[9] == 0)
+            egn_numbers[9] = 10;
+        if(egn_numbers[9] == sum)
+                corect = true;
+
+           return corect;
+}
+
+int main()
+{
+		char egn[10];
+		cout << "Please enter an EGN: " << endl;
+		cin >> egn;
+		cout << checkEGN(egn);
+
+    return 0;
+}
+
