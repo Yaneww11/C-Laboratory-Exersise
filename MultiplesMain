@@ -1,0 +1,116 @@
+// cscb035f2021week11.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include<iostream>
+#include<time.h>
+#include"sets.h"
+
+using namespace std;
+
+int main()
+{
+	srand(time(NULL));
+
+	int const bitMaskSize = 10;
+	// {0,1,2,3,4,5,6,7,8,9}
+	int bitMask[bitMaskSize] = {0,1,1,0,1,1,0,1,1,0};
+	cout << "The power of set is: " << 
+		setPower(bitMask, bitMaskSize) << endl;
+
+	unsigned sz;
+	do
+	{
+		cout << "Please, enter number of elements of the array: ";
+		cin >> sz;
+	} while (sz <= 0 || sz >= 11);
+	unsigned* arr = nullptr;
+	arr = new unsigned[sz];
+
+	fillArray(arr, sz);
+	printArray(arr, sz);
+	
+	// Task 1
+	cout << "The array is " << 
+		(isSet(arr, sz) ? "" : "not ")
+		<< "set!" << endl;
+	
+	// Task 2
+	unsigned power;
+	unsigned* set = nullptr;
+	set = makeSet(arr, sz, set, power);
+	cout << "Normalized set: \n";
+	printArray(set, power);
+	
+	// Task 3
+	unsigned* subset = nullptr;
+	unsigned subpow;
+	char bitmask[11];
+	cout << "Please enter a bitmask long " << power << " characters:\n";
+	cin >> bitmask;
+	subset = makeSubSet(set, power, bitmask, subset, subpow);
+	cout << "Bitmask is " << bitmask << endl;
+	cout << "Sub set is: \n";
+	printArray(subset, subpow);
+	
+	// Task 4
+	unsigned* bit;
+	bit = makeBitMask(set, power, subset, subpow);
+	printArray(bit, power);
+
+	
+	// Task 5
+	int target = 5;
+	cout << "Is " << target << " in set " << inSet(target, set, power) << endl;
+
+	// Task 6
+	cout << "Is subset " << isSubSet(set, power, subset, subpow) << endl;
+
+	char maskA[] = "10110", maskB[] = "01010", res[6];
+
+	// Task 7
+	cout << "Is subset " << isSubSettoSubSet(maskA, maskB) << endl;
+	// {1,2,3,4,5}
+	unsigned const size = 5;
+	unsigned set1[] = { 1,0,1,1,0 }; // {1, 3, 4}
+	unsigned set2[] = { 0,1,0,1,0 }; // {2, 4}
+	unsigned resultSet[size]; // {1, 1, 1, 1, 0}
+
+	// Difference
+	setDifference(set1, set2, resultSet, size); // {1, 0, 1, 0, 0}
+	cout << "Difference: " << endl;
+	printArray(resultSet, size);
+	
+	// Task 8
+	setUnion(set1, set2, resultSet, size);
+	cout << "Union: " << endl;
+	printArray(resultSet, size);
+
+	// Task 9 res = {0, 0, 0, 1, 0}
+	setIntersection(set1, set2, resultSet, size);
+	cout << "Intersection: " <<  endl;
+	printArray(resultSet, size);
+
+	// Task 10
+	setSymetricDifference(set1, set2, resultSet, size);
+	cout << "Symetric Difference: "<< endl;
+	printArray(resultSet, size);
+
+	// Task 11
+	setComplement(set1, set2, resultSet, size);
+	cout << "Complement: " << endl;
+	printArray(resultSet, size);
+
+	delete[] subset;
+	subset = nullptr;
+
+	delete[] set;
+	set = nullptr;
+	
+	delete[] arr;
+	arr = nullptr;
+
+	return 0;
+}
+
+
+
