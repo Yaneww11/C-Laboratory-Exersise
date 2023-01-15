@@ -1,0 +1,238 @@
+#include<iostream>
+#include"sets.h"
+
+using namespace std;
+
+int setPower(int* bitMask, int bitMaskSize) {
+	int power = 0;
+	for (int i = 0; i < bitMaskSize; i++) {
+		if (bitMask[i] == 1) {
+			power++;
+		}
+	}
+	return power;
+}
+
+// Print Array
+int printArray(unsigned* arr, unsigned sz) {
+	for (int i = 0; i < sz; i++)
+	{
+		cout << arr[i] << "\t";
+	}
+	cout << endl;
+	return 0;
+}
+
+// Fill Array
+int fillArray(unsigned* arr, unsigned sz) {
+	for (int i = 0; i < sz; i++)
+	{
+		arr[i] = rand() % 10; // 0 ... 9
+	}
+	return 0;
+}
+
+// Task 1
+bool isSet(unsigned* arr, unsigned sz) {
+	for (int i = 0; i < sz; i++) 
+	{
+		for (int j = i + 1; j < sz; j++)
+		{
+			if (arr[i] == arr[j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+// Task 2
+unsigned* makeSet(unsigned* arr, unsigned sz, unsigned* set, unsigned& pow) {
+	if (isSet(arr, sz)) {
+		pow = sz;
+		set = new unsigned[pow];
+		for (int i = 0; i < sz; i++)
+		{
+			set[i] = arr[i];
+		}
+	}
+	else {
+		pow = sz;
+		for (int i = 0; i < sz; i++)
+		{
+			for (int j = i + 1; j < sz; j++)
+			{
+				if (arr[i] == arr[j]) {
+					pow--;
+					break;
+				}
+			}
+		}
+		set = new unsigned[pow];
+		unsigned k = 0;
+		bool f = false;
+		for (int i = 0; i < sz; i++)//arr
+		{
+			f = false;
+			for (int j = 0; j < pow; j++)//set
+			{
+				if (arr[i] == set[j]) {
+					f = true;
+					break;
+				}
+			}
+			if (!f) { 
+				set[k++] = arr[i]; 
+			}
+		}
+	}
+	return set;
+}
+
+// Task 3
+unsigned* makeSubSet(unsigned* set, unsigned sz,
+	char* bitmask, unsigned* subset, unsigned& pow) {
+	pow = 0;
+	for (int i = 0; i < sz; i++)
+	{
+		if (bitmask[i] == '1') pow++;
+	}
+	// {1, 2, 6, 4, 5}
+	// {1, 0, 1, 0, 1}
+	if (pow > 0) {
+		subset = new unsigned[pow];
+		for (int i = 0, j = 0; i < sz; i++)
+		{
+			if (bitmask[i] == '1') {
+				subset[j++] = set[i];
+			}
+		}
+	}
+	return subset;
+}
+
+// Task 4
+unsigned* makeBitMask(unsigned* set, unsigned sz,
+	unsigned* subset, unsigned subsz) {
+	unsigned* bitmask = new unsigned[sz];
+	bool f = false;
+	for (int i = 0; i < sz; i++) // set
+	{
+		f = false;
+		for (int j = 0; j < subsz; j++) // subset
+		{
+			if (set[i] == subset[j]) {
+				f = true;
+				break;
+			}
+		}
+		bitmask[i] = f ? 1 : 0;
+	}
+	bitmask[sz] = '\0';
+	return bitmask;
+}
+
+// Task 5
+bool inSet(unsigned val, unsigned* set, unsigned sz) {
+	for (unsigned i = 0; i < sz; ++i) {
+		if (set[i] == val) return true;
+	}
+	return false;
+}
+
+//Task 6
+bool isSubSet(unsigned* set, unsigned sz, unsigned* subset, unsigned subsz) {
+	bool flag = false;
+	for (unsigned i = 0; i < subsz; ++i) {
+		flag = false;
+		for (unsigned j = 0; j < sz; ++j) {
+			if (set[j] == subset[i]) {
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) return false;
+	}
+	return true;
+}
+
+// Task 7
+bool isSubSettoSubSet(char* maskB, char* maskA) {
+	unsigned len = strlen(maskA);
+	for (unsigned i = 0; i < len; i++) {
+		if (maskB[i] == '1' && maskA[i] == '0') return false;
+	}
+	return true;
+}
+
+// complement
+// A = {1 2 3 4 5} {1 1 1 1 1 0 0 0 0 0}
+// B = {4 5 6 7}   {0 0 0 1 1 1 1 0 0 0}
+// Res = {1 2 3}   {1 1 1 0 0 0 0 0 0 0}
+bool setDifference(unsigned* maskA, unsigned* maskB, unsigned* res, unsigned size) {
+	for (unsigned i = 0; i < size; i++) {
+		cout << maskA[i] << " " << maskB[i] << endl;
+		if (maskA[i] == 1 && maskB[i] == 0) {
+			res[i] = 1;
+		}
+		else {
+			res[i] = 0;
+		}
+	}
+	return true;
+}
+
+bool isSet1SubsetOfSet2(unsigned* set1, unsigned* set2, unsigned setSize) {
+	for (int i = 0; i < setSize; i++) {
+		if (set2[i] == 1 && set1[i] == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+
+// Task 8
+// {1 2 3 4 5 6 7 8 9 10}
+// A = {1 2 3 4 5} {1 1 1 1 1 0 0 0 0 0}
+// B = { 4 5 6 7}  {0 0 0 1 1 1 1 0 0 0}
+// Res = {1 2 3 4 5 6 7} {1 1 1 1 1 1 1 0 0 0}
+bool setUnion(unsigned* maskA, unsigned* maskB, unsigned* res, unsigned size) {
+	for (unsigned i = 0; i < size; i++) {
+		cout << (maskA[i] | maskB[i]) << " " << maskA[i] << " " << maskB[i] << endl;
+		res[i] = (maskA[i] | maskB[i]);
+	}
+	return true;
+}
+// A = {1 2 3 4 5} {1 1 1 1 1 0 0 0 0 0}
+// B = { 4 5 6 7}  {0 0 0 1 1 1 1 0 0 0}
+// Res = {4 5}     {0 0 0 1 1 0 0 0 0 0}
+bool setIntersection(unsigned* maskA, unsigned* maskB, unsigned* res, unsigned size)
+{
+	for (unsigned i = 0; i < size; i++) {
+		cout << (maskA[i] & maskB[i]) << " " << maskA[i] << " " << maskB[i] << endl;
+		res[i] = (maskA[i] & maskB[i]);
+	}
+	return true;
+}
+// A = {1 2 3 4 5}
+// B = { 4 5 6 7}
+// Res = {1 2 3 6 7}
+bool setSymetricDifference(unsigned* maskA, unsigned* maskB, unsigned* res, unsigned size)
+{
+	for (unsigned i = 0; i < size; i++) {
+		cout << (maskA[i] ^ maskB[i]) << " " << maskA[i] << " " << maskB[i] << endl;
+		res[i] = (maskA[i] ^ maskB[i]);
+	}
+	return true;
+}
+
+bool setComplement(unsigned* maskA, unsigned* maskB, unsigned* res, unsigned size)
+{
+	for (unsigned i = 0; i < size; i++) {
+		cout << (~maskA[i] & maskB[i]) << " " << maskA[i] << " " << maskB[i] << endl;
+		res[i] = (~maskA[i] & maskB[i]);
+	}
+	return true;
+}
