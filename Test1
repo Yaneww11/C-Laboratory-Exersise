@@ -1,19 +1,35 @@
 #include <iostream>
 #include<time.h>
 #include <cstring>
+#include <cmath>
+
 
 using namespace std;
 
 bool inSet(char target, char* set, int setSize);
 int brCharsEvenPos(char* set, int setSize,string set2);
+//Exersise 2
+int printArray(int* arr, int sz);
+int* makeSubSet(int* set, int sz,int* bitmask, int* subset, int& pow);
+bool isNotPrime(int number);
+
 
 int main()
 {
+    /*Exersise 1
     int universalSetSize = 4;
 	char universalSetOfCharacters[] = { 'e','t','i','s' };
 	string charactersSet = "This is one test string!";
 	cout << "The number of symbols in even positions is " << brCharsEvenPos(universalSetOfCharacters, universalSetSize, charactersSet);
-
+*/
+int sizeU = 10;
+int u[sizeU] = {5,2,3,8,1,6,4,12,9,10};
+int bitmask[sizeU] = {1,0,1,1,1,0,1,0,0,1};
+int* subset = nullptr;
+int subpow;
+subset = makeSubSet(u, sizeU, bitmask, subset, subpow);
+cout << "Sub set is: \n";
+printArray(subset, subpow);
 
   return 0;
 }
@@ -37,3 +53,44 @@ int brCharsEvenPos(char* set, int setSize,string set2)
     }
     return br;
 }//brCharsEvenPos
+int printArray(int* arr, int sz) {
+	for (int i = 0; i < sz; i++)
+	{
+		cout << arr[i] << "\t";
+	}
+	cout << endl;
+	return 0;
+}//printArray
+int* makeSubSet(int* set, int sz,int* bitmask, int* subset, int& pow)
+{
+    pow = 0;
+	for (int i = 0; i < sz; i++)
+	{
+		if (bitmask[i] == 1 &&  isNotPrime(set[i]))
+            pow++;
+	}
+	if (pow > 0) {
+		subset = new int[pow];
+		for (int i = 0, j = 0; i < sz; i++)
+		{
+			if (bitmask[i] == 1 &&  isNotPrime(set[i])) {
+				subset[j++] = set[i];
+			}
+		}
+	}
+	return subset;
+}//makeSubSet
+
+bool isNotPrime(int number)
+{
+    if(number == 1)
+    return true;
+    else{
+      for (int i = 2; i <= sqrt(number); i++) {
+            if (number % i == 0) {
+                return true;
+            }
+      }
+    }
+    return false;
+}//bool isPrime
