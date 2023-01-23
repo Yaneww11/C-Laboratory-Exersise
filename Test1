@@ -1,0 +1,39 @@
+#include <iostream>
+#include<time.h>
+#include <cstring>
+
+using namespace std;
+
+bool inSet(char target, char* set, int setSize);
+int brCharsEvenPos(char* set, int setSize,string set2);
+
+int main()
+{
+    int universalSetSize = 4;
+	char universalSetOfCharacters[] = { 'e','t','i','s' };
+	string charactersSet = "This is one test string!";
+	cout << "The number of symbols in even positions is " << brCharsEvenPos(universalSetOfCharacters, universalSetSize, charactersSet);
+
+
+  return 0;
+}
+
+bool inSet(char target, char* set, int setSize) {
+	for (int i = 0; i < setSize; i++) {
+		if (target == set[i]) {
+			return true;
+		}
+	}
+	return false;
+}//inSet
+
+int brCharsEvenPos(char* set, int setSize,string set2)
+{
+    int br = 0;
+    for (int i = 0; i < set2.length(); i= i + 2){
+        cout << i <<  "  " <<set2[i] << br <<"  " << endl;
+        if(inSet(set2[i], set, setSize))
+            br++;
+    }
+    return br;
+}//brCharsEvenPos
