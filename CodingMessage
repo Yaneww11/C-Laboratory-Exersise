@@ -1,7 +1,59 @@
+#include <algorithm>
+#include <cstddef>
 #include <iostream>
-#include <cstring>
+#include <cmath>
+
 using namespace std;
 
+bool isPrime(int number);
+int searchPrimeBetween(int top, int bottom);
+int encode(char* orig, char* coded, int n);
+
+
+int main()
+{
+    int n = searchPrimeBetween(40,30);
+    int l = n % 26;
+    cout << l << endl;
+    char txt[30] = "This is one test string!";
+    char* encodedTxt = new char[30];
+    encode(txt, encodedTxt,l);
+    cout << encodedTxt << endl;
+
+   return 0;
+}
+
+bool isPrime(int number)
+{
+    if(number == 1)
+    return true;
+    else{
+      for (int i = 2; i <= sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+      }
+    }
+    return true;
+}//bool isPrime
+int searchPrimeBetween(int top, int bottom)
+{
+    int i = bottom;
+    for(i; i<= top; i++)
+    {
+        if(isPrime(i))
+            break;
+
+    }
+    if(!isPrime(i))
+    {
+         cout << "Do not have prime numbers" << endl;
+         return 0;
+    }
+    else
+         return i;
+
+}//searchPrimeBetween
 int encode(char* orig, char* coded, int n) {
 	char* ptr = orig;
 	unsigned i = 0;
@@ -24,26 +76,4 @@ int encode(char* orig, char* coded, int n) {
 	}
 	coded[i] = '\0';
 	return 0;
-}
-int main()
-{
-    char txt[1000];
-    cin.getline(txt, 999);
-    int n;
-    cin >> n;
-    if (n > 25 || n < 0){
-        cout << "Invalid input data!" << endl;
-    }
-    else{
-
-    char* encodedTxt = new char[strlen(txt) + 1];
-    encode(txt, encodedTxt,n);
-    cout << encodedTxt << endl;
-
-        if (encodedTxt != nullptr) {
-			delete[] encodedTxt;
-			encodedTxt = nullptr;
-		}
-    }
-    return 0;
 }
