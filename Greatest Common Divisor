@@ -1,0 +1,73 @@
+int a, b;
+
+		cout << "Please enter value for a: ";
+		cin >> a;
+
+		cout << "Please enter value for b: ";
+		cin >> b;
+
+		if (a != 0 && b != 0) {
+			a = abs(a);
+			b = abs(b);
+			if (a < b) {
+				int tmp = a;
+				a = b;
+				b = tmp;
+			}
+			int tmp;
+			while (b > 0) {
+				tmp = b;
+				b = a % b;
+				cout << "b=" << b << endl;
+				a = tmp;
+				cout << "a=" << a << endl;
+			}
+			cout << "NOD is: " << a << endl;
+		}
+		else
+			if (a != 0 || b != 0) cout << "NOD is: " <<
+				((a > b) ? a : b) << endl;
+			else {
+				cout << "It is not possible to find NOD!" << endl;
+			}
+
+	}
+  
+  /////////////////////////////////////////////////// Least Common Divisor//////////////////////////////////////////////////////////////////////////////////////
+  int a, b, orig_a, orig_b, nod, nok;
+
+		cout << "Please enter value for a: ";
+		cin >> a;
+
+		cout << "Please enter value for b: ";
+		cin >> b;
+
+		orig_a = abs(a);
+		orig_b = abs(b);
+
+		if (a != 0 && b != 0) {
+			a = abs(a);
+			b = abs(b);
+			if (a < b) {
+				int tmp = a;
+				a = b;
+				b = tmp;
+			}
+			int tmp;
+			while (b > 0) {
+				tmp = b;
+				b = a % b;
+				a = tmp;
+			}
+			nod = a;
+		}
+		else {
+			nod = -1;
+		}
+		if (nod > 0) {
+			nok = (orig_a * orig_b) / nod;
+			cout << "The least common denominator is: " << nok << endl;
+		}
+		else cout << "It is not possible to find the least common denominator!" << endl;
+	}
+}
