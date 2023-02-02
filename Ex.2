@@ -1,0 +1,54 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+
+
+char* makeSubSet(char* set, int sz,char* bitmask, char* subset, int& pow);
+
+int printArray(char* arr, int sz) {
+	for (int i = 0; i < sz; i++)
+	{
+		cout << arr[i] << "\t";
+	}
+	cout << endl;
+	return 0;
+}
+
+int main()
+{
+    int power = 10;
+    char set[power] = { 'e', 'N', 'c', 'b', 'B', 'U', 'J', 'x', 'n', 'Z'};
+    char* subset = nullptr;
+	int subpow = 6;
+	char bitmask[power] ={0, 1, 0, 0, 1, 1, 1, 0, 1, 1};
+	subset = makeSubSet(set, power, bitmask, subset, subpow);
+	cout << subpow;
+	cout << "Sub set is: \n";
+	printArray(subset, subpow);
+
+    return 0;
+}
+
+char* makeSubSet(char* set, int sz, char* bitmask, char* subset, int& pow) {
+	pow = 0;
+	for (int i = 0; i < sz; i++)
+	{
+		if (bitmask[i] == '1')
+            pow++;
+	}
+	cout << pow;
+
+	if (pow > 0) {
+		subset = new char[pow];
+		for (int i = 0, j = 0; i < sz; i++)
+		{
+			if (bitmask[i] == '1') {
+				subset[j++] = set[i];
+			}
+		}
+	}
+	return subset;
+}
