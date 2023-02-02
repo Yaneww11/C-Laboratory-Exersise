@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+int maxElement(int* set, int setSize);
+int minElement(int* set, int setSize);
+int gcd(int a, int b);
+int f(int* set1,int  setSize1, int* set2, int setSize2);
+
+
+
+
+int main()
+{
+    int size1 = 5;
+    int size1 = 10;
+    int set1[size1] = {6, 11, 8, 2, 5};
+    int set2[size2] = {5, 2, 3, 8, 1, 6, 4, 12, 9, 10};
+
+    cout << f(set1, size1, set2, size2);
+
+    return 0;
+}
+
+int maxElement(int* set, int setSize) {
+	int max = set[0];
+	for (int i = 1; i < setSize; i++) {
+		if (max < set[i]) {
+			max = set[i];
+		}
+	}
+	return max;
+}
+
+int minElement(int* set, int setSize) {
+	int min = set[0];
+	for (int i = 1; i < setSize; i++) {
+		if (min > set[i]) {
+			min = set[i];
+		}
+	}
+	return min;
+}
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int f(int* set1, int setSize1, int* set2, int setSize2)
+{
+    int k = 0;
+    int pow = setSize1;
+    int* set3 = new int[setSize1];
+    for(int i = 0; i < setSize1; i++){
+        for(int j = 0; j < setSize2; j++)
+        {
+            if(set1[i] == set2[j])
+                set3[k++] = set1[i];
+                break;
+        }
+    }
+    int minE = minElement(set3, k);
+    int maxE = maxElement(set3, k);
+    result = gcd(minE, maxE);
+    return result;
+
+}
