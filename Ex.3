@@ -1,0 +1,60 @@
+#include <iostream>
+
+
+using namespace std;
+
+//Ex.3
+int get_middle_value(const int* numbers, int size);
+char encode_char(char c, int offset);
+string encode_string(const int* numbers, int size, const char* str);
+//Ex.2
+
+
+int main()
+{
+    //Ex.3
+    int numbers[] = {5, 4, 2, 6, 3};
+    int size = 5;
+    const char* str = "ABCD...xyz";
+    cout << encode_string(numbers, size, str) << endl;
+    //Ex.2
+
+    return 0;
+}
+int get_middle_value(const int* numbers, int size) {
+    int middle = size / 2;
+    if (size % 2 == 0) {
+        middle = (numbers[middle - 1] + numbers[middle]) / 2;
+    } else {
+        middle = numbers[middle];
+    }
+    return middle;
+}
+char encode_char(char c, int offset) {
+    if (c >= 'a' && c <= 'z') {
+        int new_char = c + offset;
+        if (new_char > 'z') {
+            new_char = 'a' + (new_char - 'z') - 1;
+        }
+        return (char) new_char;
+    } else if (c >= 'A' && c <= 'Z') {
+        int new_char = c + offset;
+        if (new_char > 'Z') {
+            new_char = 'A' + (new_char - 'Z') - 1;
+        }
+        return (char) new_char;
+    } else {
+        return c;
+    }
+}
+
+string encode_string(const int* numbers, int size, const char* str) {
+    int offset = get_middle_value(numbers, size);
+    string encoded_str = "";
+    int i = 0;
+    while (str[i] != '\0') {
+        encoded_str += encode_char(str[i], offset);
+        i++;
+    }
+    return encoded_str;
+}
