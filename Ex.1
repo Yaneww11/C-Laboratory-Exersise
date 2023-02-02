@@ -15,7 +15,7 @@ int f(int* set1,int  setSize1, int* set2, int setSize2);
 int main()
 {
     int size1 = 5;
-    int size1 = 10;
+    int size2 = 10;
     int set1[size1] = {6, 11, 8, 2, 5};
     int set2[size2] = {5, 2, 3, 8, 1, 6, 4, 12, 9, 10};
 
@@ -65,7 +65,7 @@ int f(int* set1, int setSize1, int* set2, int setSize2)
     }
     int minE = minElement(set3, k);
     int maxE = maxElement(set3, k);
-    result = gcd(minE, maxE);
+    int result = gcd(minE, maxE);
     return result;
 
 }
